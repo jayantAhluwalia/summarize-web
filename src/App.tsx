@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 // Components for each page
 import AppRouter from "./router/AppRouter";
