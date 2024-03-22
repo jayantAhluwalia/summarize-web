@@ -1,13 +1,14 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { ImageUploadPageProps } from '../models/model';
 
-interface ImageUploadPageProps {
-  username: string;
-  onImageUpload: (file: File) => void;
-}
+
 
 const ImageUploadPage: React.FC<ImageUploadPageProps> = ({ username, onImageUpload }) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imageUrlPreview, setImageUrlPreview] = useState<string | null>(null);
+
+  
 
   const handleImageChange = (event: any) => {
     const file = event.target.files?.[0];

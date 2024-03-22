@@ -1,12 +1,38 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 interface ResultPageProps {
-  imageUrl: string | null;
-  ocrText: string | null;
-  summaryText: string | null;
+  imageId: string | null;
 }
 
-const ResultPage: React.FC<ResultPageProps> = ({ imageUrl, ocrText, summaryText }) => {
+const ResultPage: React.FC<ResultPageProps> = ({
+  imageId,
+}) => {
+  const [imageUrl, setImageUrl] = useState('');
+  const [ocrText, setOcrText] = useState('');
+  const [summaryText, setSummaryText] = useState('');
+
+  useEffect(() => {
+    if (imageId) {
+      fetchResults();
+    }
+  }, [imageId, imageUrl]);
+
+  const fetchResults = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/v1/page/${imageId}`
+      );
+      console.log(response);
+      setImageUrl(response.data.imageURL);
+      setOcrText(response.data.textExtracted);
+      setSummaryText(response.data.textSummary);
+      console.log(imageUrl, ocrText, summaryText)
+    } catch (error) {
+      console.error("Error fetching results:", error);
+      // Handle fetch errors gracefully (e.g., display error message)
+    }
+  };
   return (
     <div className="result-page">
       <h1>Results</h1>
